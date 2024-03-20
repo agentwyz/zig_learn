@@ -48,7 +48,7 @@ pub const Stack = struct {
     }
 
     pub fn deinit(self: *Self) void {
-        while (self.pop()) {
+        while (self.pop()) |_| {
 
         }
     }
@@ -61,6 +61,8 @@ const alloc = std.testing.allocator;
 
 test "Create push pop" {
     var stack = Stack.init(alloc);
+    defer stack.deinit();
+    //defer stack.deinit();
 
     try std.testing.expectEqual(@as(?f64, null), stack.peek());
     try std.testing.expectEqual(@as(?f64, null), stack.pop());
